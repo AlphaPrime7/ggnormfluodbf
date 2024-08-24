@@ -58,7 +58,6 @@ ggnormfluodbf_vbar <- function(
     x=!!rlang::sym(x_var),
     y=!!rlang::sym(y_var)),
     v_adj = v_adj)
-  print(data_summary)
 
   mapping_summ <- ggplot2::aes(
     x = !!rlang::sym(x_var),

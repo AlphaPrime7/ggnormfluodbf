@@ -167,6 +167,7 @@ print.ggnormfluodbf_aes <- function(x, ...) {
 #' @return data summary
 #' @export
 #' @examples \dontrun{
+#' weird <- ggplot2::aes(x=smoker,y=sex)
 #' ybarplot_data_summary(data,
 #'                      map = ggnormfluodbf_aes(x=!!rlang::sym(rlang::as_name(weird$x)),
 #'                                              y=!!rlang::sym(rlang::as_name(weird$y))))}
@@ -188,5 +189,17 @@ ybarplot_data_summary <- function(data, map, v_adj){
     dplyr::mutate(!!rlang::sym(y) := forcats::fct_rev(factor(!!rlang::sym(y))))
 
   data
+}
+
+xbarplot_data_summary <- function(data, map) {
+
+  x <- rlang::as_name(map$x)
+  y <- rlang::as_name(map$y)
+
+  data_summary <- data %>%
+    dplyr::group_by(!!rlang::sym(x), !!rlang::sym(y)) %>%
+    dplyr::summarise(count = dplyr::n())
+
+  data_summary
 }
 
