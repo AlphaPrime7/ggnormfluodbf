@@ -187,19 +187,24 @@ ybarplot_data_summary <- function(data, map, v_adj){
     ) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(!!rlang::sym(y) := forcats::fct_rev(factor(!!rlang::sym(y))))
-
   data
 }
 
-xbarplot_data_summary <- function(data, map) {
+xbarplot_data_summary <- function(data, map, h_adj) {
 
   x <- rlang::as_name(map$x)
   y <- rlang::as_name(map$y)
 
-  data_summary <- data %>%
+  data <- data %>%
     dplyr::group_by(!!rlang::sym(x), !!rlang::sym(y)) %>%
-    dplyr::summarise(count = dplyr::n())
-
-  data_summary
+    dplyr::summarise(count = dplyr::n()) %>%
+    dplyr::group_by(!!rlang::sym(y)) %>%
+    dplyr::mutate(
+      prop = count / sum(count),
+      xpos = cumsum(prop) - (h_adj * prop)
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(!!rlang::sym(x) := forcats::fct_rev(factor(!!rlang::sym(x))))
+  data
 }
 

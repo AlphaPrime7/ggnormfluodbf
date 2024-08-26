@@ -64,26 +64,6 @@ ggnormfluodbf_vbar <- function(
     y = !!rlang::sym(stat),
     fill = !!rlang::sym(y_var))
 
-  mapping_prop <- ggplot2::aes()
-  mapping_prop$fill <- mapping$y
-  mapping_prop$x <- mapping$x
-  mapping_prop$by <- mapping$x
-  data[[rlang::as_name(mapping$y)]] <- factor(data[[rlang::as_name(mapping$y)]])
-  if (is.null(bar_args)) bar_args <- list()
-  bar_args$position <- ggplot2::position_fill(.5, reverse = F)
-  bar_args$stat <- 'count'
-
-  mapping_count <- ggplot2::aes()
-  mapping_count$fill <- mapping$y
-  mapping_count$x <- mapping$x
-  mapping_count$by <- mapping$x
-  if (is.null(count_bar_args)) count_bar_args <- list()
-  data_count <- data
-  data_count[[rlang::as_name(mapping$y)]] <- forcats::fct_rev(data[[rlang::as_name(mapping$y)]])
-  count_bar_args$stat <- 'count'
-  count_bar_args$position <- 'stack'
-
-  print(stat)
   if (stat == 'prop') {
     p <- ggplot2::ggplot(data_summary, mapping_summ) +
       ggplot2::geom_col(position = "stack") +
@@ -93,6 +73,14 @@ ggnormfluodbf_vbar <- function(
         size = size,
         ...)
   } else if (stat == 'prop_alt'){
+    mapping_prop <- ggplot2::aes()
+    mapping_prop$fill <- mapping$y
+    mapping_prop$x <- mapping$x
+    mapping_prop$by <- mapping$x
+    data[[rlang::as_name(mapping$y)]] <- factor(data[[rlang::as_name(mapping$y)]])
+    if (is.null(bar_args)) bar_args <- list()
+    bar_args$position <- ggplot2::position_fill(.5, reverse = F)
+    bar_args$stat <- 'count'
     p <- ggplot2::ggplot(data, mapping_prop) +
       do.call(ggplot2::geom_bar, bar_args) +
       ggplot2::scale_y_continuous(labels = scales::percent) +
@@ -100,11 +88,19 @@ ggnormfluodbf_vbar <- function(
         mapping = ggplot2::aes(
           label = scales::percent(ggplot2::after_stat(count / tapply(count, x, sum)[x]))
         ),
-        stat = 'count',
         position = ggplot2::position_fill(vjust = 0.5, reverse = F),
         size = size,
         ...)
   } else {
+    mapping_count <- ggplot2::aes()
+    mapping_count$fill <- mapping$y
+    mapping_count$x <- mapping$x
+    mapping_count$by <- mapping$x
+    if (is.null(count_bar_args)) count_bar_args <- list()
+    data_count <- data
+    data_count[[rlang::as_name(mapping$y)]] <- forcats::fct_rev(data[[rlang::as_name(mapping$y)]])
+    count_bar_args$stat <- 'count'
+    count_bar_args$position <- 'stack'
     p <- ggplot2::ggplot(data_count, mapping_count) +
       do.call(ggplot2::geom_bar, count_bar_args) +
       ggplot2::scale_y_continuous() +
