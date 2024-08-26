@@ -111,7 +111,6 @@ ggnormfluodbf_vbar <- function(
         ...
       )
   }
-
   if (!is.null(fill_colors)) {
     p <- p + ggplot2::scale_fill_manual(values = rev(fill_colors))
   }
