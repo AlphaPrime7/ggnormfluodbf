@@ -120,145 +120,9 @@ ggnormfluodbf_vbar <- function(
 #' @rdname barplots
 #' @return ggplot object
 #' @export
-ggnormfluodbf_vbar_alt <- function(
-    data,
-    x,
-    y,
-    size,
-    fill_colors = NULL,
-    ...
-) {
-  if (is.null(x) || is.null(y))
-    rlang::warn("'x' and 'y' arguments are required", use_cli_format = TRUE)
-
-  x_var <- if (is.symbol(x)) rlang::as_string(x) else x
-  y_var <- if (is.symbol(y)) rlang::as_string(y) else y
-
-  if (!x_var %in% names(data))
-    rlang::abort(paste("Variable", x_var, "not found in data"), use_cli_format = TRUE)
-  if (!y_var %in% names(data))
-    rlang::abort(paste("Variable", y_var, "not found in data"), use_cli_format = TRUE)
-
-  data_summary <- data %>%
-    dplyr::group_by(!!rlang::sym(x_var), !!rlang::sym(y_var)) %>%
-    dplyr::summarise(count = dplyr::n(), .groups = "drop") %>%
-    dplyr::group_by(!!rlang::sym(x_var)) %>%
-    dplyr::mutate(
-      prop = count / sum(count),
-      ypos = cumsum(prop) - (0.5 * prop)
-    ) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(!!rlang::sym(y_var) := forcats::fct_rev(factor(!!rlang::sym(y_var))))
-
-  mapping_summ <- ggplot2::aes(x = !!rlang::sym(x_var), y = prop, fill = !!rlang::sym(y_var))
-
-  p <- ggplot2::ggplot(data_summary, mapping_summ) +
-    ggplot2::geom_col(position = "stack") +
-    ggplot2::scale_y_continuous(labels = scales::percent) +
-    ggplot2::geom_text(
-      ggplot2::aes(y = ypos, label = scales::percent(prop, accuracy = 0.2)),
-      size = size,
-      ...)
-
-  if (!is.null(fill_colors)) {
-    p <- p + ggplot2::scale_fill_manual(values = rev(fill_colors))
-  }
-  plotly::ggplotly(p)
-}
-
-
-#' @rdname barplots
-#' @return ggplot object
-#' @export
-ggnormfluodbf_vbar_alt_two <- function(
-    data,
-    mapping,
-    bar_args =NULL,
-    stat = c('prop_alt','prop'),
-    size = NULL,
-    v_adj = 0.5,
-    fill_colors = NULL,
-    ...) {
-  if (is.null(mapping$x) || is.null(mapping$y))
-    rlang::warn("'x' and 'y' arguments are required", use_cli_format = TRUE)
-
-
-  #handling the count component
-  mapping_prop <- ggplot2::aes()
-  mapping_prop$fill <- mapping$y
-  mapping_prop$x <- mapping$x
-  mapping_prop$by <- mapping$x
-  data[[rlang::as_name(mapping$y)]] <- factor(data[[rlang::as_name(mapping$y)]]) #ensure data is treated right because count relies on the data
-  if (is.null(bar_args)) bar_args <- list()
-  bar_args$position <- ggplot2::position_fill(.5, reverse = TRUE)
-  bar_args$stat <- 'count'
-
-  #cannot convert a <quosure> into a string so rlang::as_string fails
-  x_var <- rlang::as_name(mapping$x)
-  y_var <- rlang::as_name(mapping$y)
-
-  #managing the stat param
-  if('count' %in% stat){
-    stat = ggnormfluodbf_aes(stat = count)
-    stat <- rlang::as_name(stat$stat)
-  } else {
-    stat = ggnormfluodbf_aes(stat = prop)
-    stat <- rlang::as_name(stat$stat)
-  }
-
-  #add the prop and ypos attributes to the summary of the data
-  data_summary <- data %>%
-    dplyr::group_by(!!rlang::sym(x_var), !!rlang::sym(y_var)) %>%
-    dplyr::summarise(count = dplyr::n(), .groups = "drop") %>%
-    dplyr::group_by(!!rlang::sym(x_var)) %>%
-    dplyr::mutate(
-      prop = count / sum(count),
-      ypos = cumsum(prop) - (v_adj * prop)
-    ) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(!!rlang::sym(y_var) := forcats::fct_rev(factor(!!rlang::sym(y_var))))
-  print(data_summary)
-
-  #make an aes map of the needed variables for the prop plot
-  mapping_summ <- ggplot2::aes(x = !!rlang::sym(x_var), y = !!rlang::sym(stat), fill = !!rlang::sym(y_var))
-
-  #create the base ggplot then add components
-  #Recipe is:
-  #base plot >  stack with geom_col > make percentage axis with scale_y_continuous > add the text (coolest part)
-  if(stat == 'prop') {
-    p <- ggplot2::ggplot(data_summary, mapping_summ) +
-      ggplot2::geom_col(position = "stack") +
-      ggplot2::scale_y_continuous(labels = scales::percent) +
-      ggplot2::geom_text(
-        ggplot2::aes(y = ypos, label = scales::percent(prop, accuracy = 0.2)),
-        size = size,
-        ...)
-  } else {
-    p <- ggplot2::ggplot(data, mapping_prop) +
-      do.call(ggplot2::geom_bar, bar_args) +
-      ggplot2::scale_y_continuous(labels = scales::percent) +
-      ggplot2::geom_text(
-        mapping = ggplot2::aes(
-          label = scales::percent(ggplot2::after_stat(count / tapply(count, x, sum)[x])),
-        ),
-        stat = 'count',
-        position = ggplot2::position_fill(vjust = 0.5, reverse=TRUE),
-        ...
-      )
-  }
-
-
-  if (!is.null(fill_colors)) {
-    p <- p + ggplot2::scale_fill_manual(values = rev(fill_colors))
-  }
-  plotly::ggplotly(p)
-}
-
-#' @rdname barplots
-#' @return ggplot object
-#' @export
 ggnormfluodbf_hbar <- function(data,
                                mapping,
+                               stat = NULL,
                                size,
                                h_adj = 0.5,
                                fill_colors = NULL,
@@ -281,15 +145,50 @@ ggnormfluodbf_hbar <- function(data,
     dplyr::mutate(!!rlang::sym(x_var) := forcats::fct_rev(factor(!!rlang::sym(x_var))))
   print(data_summary)
 
-  mapping_summ <- ggplot2::aes(y = !!rlang::sym(y_var), x = prop, fill = !!rlang::sym(x_var))
+  if (stat == 'prop' || is.null(stat)){
+    mapping_summ <- ggplot2::aes(y = !!rlang::sym(y_var), x = prop, fill = !!rlang::sym(x_var))
+    p <- ggplot2::ggplot(data_summary, mapping_summ) +
+      ggplot2::geom_col(position = "stack") +
+      ggplot2::scale_x_continuous(labels = scales::percent) +
+      ggplot2::geom_text(
+        ggplot2::aes(x = xpos, label = scales::percent(prop, accuracy = 0.2)),
+        size = size,
+        ...)
+  }
+  else if (stat == 'count'){
+    data_count <- data
+    data_count[[rlang::as_name(mapping$x)]] <- forcats::fct_rev(data[[rlang::as_name(mapping$x)]])
+    mapping$fill <- mapping$x
+    mapping$x <- NULL
+    mapping$by <- mapping$y
+    mapping$y <- mapping$y
 
-  p <- ggplot2::ggplot(data_summary, mapping_summ) +
-    ggplot2::geom_col(position = "stack") +
-    ggplot2::scale_x_continuous(labels = scales::percent) +
-    ggplot2::geom_text(
-      ggplot2::aes(x = xpos, label = scales::percent(prop, accuracy = 0.2)),
-      size = size,
-      ...)
+    p <- ggplot2::ggplot(data_count, mapping) +
+      ggplot2::geom_bar(stat = 'count', position = ggplot2::position_stack(0.5, reverse = F)) +
+      ggplot2::scale_x_continuous() +
+      ggplot2::geom_text(mapping = ggplot2::aes(label = ggplot2::after_stat(count)),
+                         stat = 'count',
+                         position = ggplot2::position_stack(0.5, reverse = F),
+                         size = size,
+                         ...)
+  }
+  else {
+    data_count <- data
+    data_count[[rlang::as_name(mapping$x)]] <- forcats::fct_rev(data[[rlang::as_name(mapping$x)]])
+    mapping$fill <- mapping$x
+    mapping$x <- NULL
+    mapping$by <- mapping$y
+    mapping$y <- mapping$y
+
+    p <- ggplot2::ggplot(data_count, mapping) +
+      ggplot2::geom_bar(stat = 'count', position = ggplot2::position_stack(0.5, reverse = F)) +
+      ggplot2::scale_x_continuous() +
+      ggplot2::geom_text(mapping = ggplot2::aes(label = ggplot2::after_stat(count)),
+                         stat = 'count',
+                         position = ggplot2::position_stack(0.5, reverse = F),
+                         size = size,
+                         ...)
+  }
 
   if (!is.null(fill_colors)) {
     p <- p + ggplot2::scale_fill_manual(values = rev(fill_colors))
