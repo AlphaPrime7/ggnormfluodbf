@@ -17,5 +17,7 @@ str_c(..., sep = "", collapse = NULL)
 String Concatenate
 }
 \examples{
-\dontrun{str_c("please install the package '", pkg, "'.  install.packages('", pkg, "') ")}
+\dontrun{
+str_c(...)
+}
 }

@@ -6,24 +6,25 @@
 #' @param data data
 #' @param mapping aesthetic vector
 #' @param stat stat (prop or count)
-#' @param x x
-#' @param y y
 #' @param size text size
 #' @param v_adj vertical adjustment
 #' @param h_adj horizontal adjustment
 #' @param fill_colors fill colors
+#' @param bar_args bar arguments
+#' @param count_bar_args count bar arguments
 #' @param ... dots
 #' @return ggplot object
-#' @export
 #' @examples \dontrun{
-#' ggnormfluodbf_vbar(tips, mapping = ggplot2::aes(x = smoker, y = sex), size = 8, fill_colors = c('red','blue'))
-#' ggnormfluodbf_vbar(tips, mapping = ggplot2::aes(x = smoker, y = sex), size = 8, stat = 'prop', fill_colors = c('red','blue'))
-#' ggnormfluodbf_vbar(tips, mapping = ggplot2::aes(x = smoker, y = sex), size = 8, stat = 'count', fill_colors = c('red','blue'))
-#' ggnormfluodbf_vbar(tips, mapping = ggplot2::aes(x = smoker, y = sex), size = 8, stat = 'prop_alt', fill_colors = c('red','blue'))
-#' ggnormfluodbf_hbar(tips, mapping = ggplot2::aes(x = sex, y = smoker), size = 8, fill_colors = c('maroon','gray'))
-#' ggnormfluodbf_hbar(df1, mapping = ggplot2::aes(x = sex, y = smoker), size = 8, fill_colors = c('maroon','blue','green'))
-#' ggnormfluodbf_hbar(df2, mapping = ggplot2::aes(x = sex, y = smoker), size = 5, fill_colors = c('red','blue','maroon','green'),h_adj = 0.4))
-#' ggnormfluodbf_hbar(df2, mapping = ggplot2::aes(x = smoker, y = sex), size = 5, fill_colors = c('red','blue','maroon','green'),h_adj = 0.4)}
+#' ggnormfluodbf_vbar(tips, mapping = aes(x = smoker, y = sex), size = 8, fill_colors = c('red','blue'))
+#' ggnormfluodbf_vbar(tips, mapping = aes(x = smoker, y = sex), size = 8, stat = 'prop', fill_colors = c('red','blue'))
+#' ggnormfluodbf_vbar(tips, mapping = aes(x = smoker, y = sex), size = 8, stat = 'count', fill_colors = c('red','blue'))
+#' ggnormfluodbf_vbar(tips, mapping = aes(x = smoker, y = sex), size = 8, stat = 'prop_alt', fill_colors = c('red','blue'))
+#' ggnormfluodbf_hbar(tips, mapping = aes(x = sex, y = smoker), size = 8, fill_colors = c('maroon','gray'))
+#' ggnormfluodbf_hbar(df1, mapping = aes(x = sex, y = smoker), size = 8, fill_colors = c('maroon','blue','green'))
+#' ggnormfluodbf_hbar(df2, mapping = aes(x = sex, y = smoker), size = 5, fill_colors = c('red','blue','maroon','green'),h_adj = 0.4))
+#' ggnormfluodbf_hbar(df2, mapping = aes(x = smoker, y = sex), size = 5, fill_colors = c('red','blue','maroon','green'),h_adj = 0.4)
+#' }
+NULL
 
 #' @rdname barplots
 #' @return ggplot object

@@ -1,0 +1,82 @@
+test_package:
+	test_package <- function (package = "./", ...) {
+		devtools::document(package)
+		devtools::test(package, ...)
+	}
+	test_package()
+
+bar_data:
+	bar_data <- function () {
+		df1 <- data.frame(sex = rep(c("Male", "Female", "Other", "Transfaux"),
+		each = 100), smoker = factor(rep(c("Yes", "No"), times = 200)))
+		df1
+	}
+	bar_data()
+	
+package_doc:
+	create_pkg_level_doc <- function(){
+		usethis::use_package_doc()
+	}
+	create_pkg_level_doc()
+	
+knit_vignettes:
+	devtools::document(); packagedocs::build_vignettes()
+	
+reverse_depends:
+	# revdepcheck::revdep_reset()
+  	revdepcheck::revdep_check(num_workers = 4, timeout = as.difftime(30, units = "mins"), quiet = FALSE)
+	reverse_depends_email:
+  	devtools:::revdep_email(date = "Aug 29th last day working ggnormfluodbf before resuming codeslow learning", version = "1.3.0", author = "Adeck", draft = TRUE, only_problems = FALSE)
+
+create_dictionary:
+	create_functions_dictionary <- function() 
+	{
+		dcf_content <- list()
+  		dcf_file <- NULL
+  		format_function <- function(func, field_name) {
+    			func_string <- deparse(func)
+    			formatted_func <- c(paste0(field_name, " <- function(", paste(names(formals(func)), collapse = ", "), ") "), paste0("  ", trimws(func_string[-c(1, length(func_string))])),"}")
+    			paste(formatted_func, collapse = "\n")
+    		}
+  		add_field <- function(field_name, field_value, filename_with_dcf_ext = NULL, temp_loc = FALSE) {
+    			if (is.function(field_value)) {
+      				field_value <- format_function(field_value, field_name)
+    			}
+    			dcf_content[[field_name]] <- field_value
+    			if (!is.null(filename_with_dcf_ext)) {
+      				dcf_text <- sapply(names(dcf_content), function(name) {
+        			value <- dcf_content[[name]]
+        			value_lines <- strsplit(value, "\n")[[1]]
+        			indented_value <- paste0("  ", value_lines, collapse = "\n")
+        			paste0(name, ":\n", indented_value)})
+      				dcf_text <- paste(dcf_text, collapse = "\n\n")
+      				if (temp_loc) {
+        				dcf_file <<- tempfile(fileext = paste0(".", filename_with_dcf_ext))
+      				} 
+      				else {
+        				dcf_file <<- filename_with_dcf_ext
+      				}
+      				writeLines(dcf_text, dcf_file)
+    			}
+    			invisible(dcf_file)
+  		}
+  		get_file <- function() {
+    			dcf_file
+  		}
+  		list(add_field = add_field, get_file = get_file)
+	}
+	create_functions_dictionary()
+
+	
+
+	
+
+
+	
+
+
+
+		
+
+  
+

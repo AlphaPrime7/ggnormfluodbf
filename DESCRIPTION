@@ -1,6 +1,6 @@
 Package: ggnormfluodbf
 Type: Package
-Title: A package designed to plot data from normfluodbf and to immerse myself into the grammar of R graphics.
+Title: A package designed to plot data from normfluodbf and to immerse myself into the grammar of R graphics
 Version: 0.1.0
 Author: Tingwei Adeck
 Maintainer: The package maintainer <awesome.tingwei@outlook.com>
@@ -10,11 +10,18 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
 Suggests: 
-    testthat (>= 3.0.0),
+    testthat (>= 3.2.1),
     learnr,
     rmarkdown
 Config/testthat/edition: 3
+Depends:
+    R (>= 4.3.0)
 Imports: 
-    ggplot2
+    ggplot2 (>= 3.5.0),
+    dplyr, 
+    forcats,
+    plotly,
+    rlang (>= 1.1.3),
+    scales
 URL: https://github.com/AlphaPrime7/ggnormfluodbf, https://alphaprime7.github.io/ggnormfluodbf/
 BugReports: https://github.com/AlphaPrime7/ggnormfluodbf/issues

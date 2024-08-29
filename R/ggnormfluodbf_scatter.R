@@ -8,7 +8,8 @@
 #' @return ggplot object
 #' @export
 #' @examples \dontrun{
-#' ggnormfluodbf_scatter(dat_1,mapping = aes(x=Cycle_Number, y=A1), colour = 'green')}
+#' ggnormfluodbf_scatter(dat_1,mapping = aes(x=Cycle_Number, y=A1), colour = 'green')
+#' }
 ggnormfluodbf_scatter <- function(data,
                                   mapping,
                                   colour=NULL,
@@ -16,7 +17,7 @@ ggnormfluodbf_scatter <- function(data,
                                   xlab = "Cycle Number",
                                   ylab = "Fluorescence"){
 
-  if (class(mapping) != 'uneval'){
+  if (inherits(mapping, 'uneval')){
     rlang::warn(message = 'mapping must be an aesthetic mapping',
                 use_cli_format = T)
   }

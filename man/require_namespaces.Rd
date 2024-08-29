@@ -13,5 +13,7 @@ require_namespaces(pkgs)
 Require Namespace
 }
 \examples{
-\dontrun{require_namespaces(pkgs)}
+\dontrun{
+require_namespaces(pkgs)
+}
 }

@@ -15,6 +15,8 @@
 Print
 }
 \examples{
-\dontrun{aes}
+\dontrun{
+print.ggnormfluodbf_aes(map)
+}
 }
 \concept{printer}

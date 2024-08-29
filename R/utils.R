@@ -7,7 +7,9 @@
 #' @param p function
 #' @return NULL
 #' @export
-#' @examples \dontrun{print_if_interactive(p)}
+#' @examples \dontrun{
+#' print_if_interactive(p)
+#' }
 print_if_interactive <- function(p) {
   if (interactive()) {
     print(p)
@@ -21,7 +23,9 @@ print_if_interactive <- function(p) {
 #' @return NULL
 #' @export
 #' @examples
-#' \dontrun{str_c("please install the package '", pkg, "'.  install.packages('", pkg, "') ")}
+#' \dontrun{
+#' str_c(...)
+#' }
 str_c <- function(..., sep = "", collapse = NULL) {
   paste(..., sep = sep, collapse = collapse)
 }
@@ -31,7 +35,9 @@ str_c <- function(..., sep = "", collapse = NULL) {
 #' @return NULL
 #' @export
 #' @examples
-#' \dontrun{require_namespaces(pkgs)}
+#' \dontrun{
+#' require_namespaces(pkgs)
+#' }
 require_namespaces <- function(pkgs) {
   for (pkg in pkgs) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
@@ -40,78 +46,14 @@ require_namespaces <- function(pkgs) {
   }
 }
 
-#' Create dictionary in .dcf format
-#' @param key key
-#' @param func value
-#' @param filename_with_dcf_ext file name with dcf extension
-#' @param temp_loc temp boolean
-#' @return NULL
-#' @export
-#' @examples
-#' \dontrun {
-#' tp <- function(package = "./", ...){
-#' devtools::document(package)
-#' devtools::test(package, ...)}
-#' key <- "test_package"
-#' dict <- create_functions_dictionary()
-#' file_path <- dict$add_field(field_name = "bar_data", mbd, "hf.dcf")}
-create_functions_dictionary <- function() {
-  dcf_content <- list()
-  dcf_file <- NULL
-
-  format_function <- function(func, field_name) {
-    func_string <- deparse(func)
-
-    formatted_func <- c(
-      paste0(field_name, " <- function (", paste(names(formals(func)), collapse = ", "), ") "),
-      paste0("\t", trimws(func_string[-c(1, length(func_string))])),
-      "}",
-      paste0(field_name, "()")
-    )
-
-    paste(formatted_func, collapse = "\n")
-  }
-
-  add_field <- function(field_name, field_value, filename_with_dcf_ext = NULL, temp_loc = FALSE) {
-    if (is.function(field_value)) {
-      field_value <- format_function(field_value, field_name)
-    }
-
-    dcf_content[[field_name]] <<- field_value
-
-    if (!is.null(filename_with_dcf_ext)) {
-      dcf_text <- sapply(names(dcf_content), function(name) {
-        value <- dcf_content[[name]]
-        value_lines <- strsplit(value, "\n")[[1]]
-        indented_value <- paste0("\t", value_lines, collapse = "\n")
-        paste0(name, ":\n", indented_value)
-      })
-      dcf_text <- paste(dcf_text, collapse = "\n\n")
-
-      if (temp_loc) {
-        dcf_file <<- tempfile(fileext = paste0(".", filename_with_dcf_ext))
-      } else {
-        dcf_file <<- filename_with_dcf_ext
-      }
-
-      writeLines(dcf_text, dcf_file)
-    }
-
-    invisible(dcf_file)
-  }
-
-  get_file <- function() {
-    dcf_file
-  }
-
-  list(add_field = add_field, get_file = get_file)
-}
-
 #' Read a function from the functions dictionary
 #' @param key key
+#' @param file file with dictionary
 #' @return NULL
 #' @export
-#' @examples \dontrun{read_functions_dictionary(test_package)}
+#' @examples \dontrun{
+#' read_functions_dictionary(test_package)
+#' }
 read_functions_dictionary <- function(key, file) {
   eval(parse(text = read.dcf(file, fields = key)))
 }
@@ -121,7 +63,9 @@ read_functions_dictionary <- function(key, file) {
 #' @param ... dots
 #' @return aes list
 #' @export
-#' @examples \dontrun{ggnormfluodbf_aes(x=smokeyou, y=yourmamasofat)}
+#' @examples \dontrun{
+#' ggnormfluodbf_aes(x, y)
+#' }
 ggnormfluodbf_aes <- function(...) {
   aes_list <- rlang::enquos(...)
   aes_list <- lapply(aes_list, function(x) {
@@ -142,7 +86,9 @@ ggnormfluodbf_aes <- function(...) {
 #' @param ... placeholder
 #' @return NULL
 #' @examples
-#' \dontrun{aes}
+#' \dontrun{
+#' print.ggnormfluodbf_aes(map)
+#' }
 print.ggnormfluodbf_aes <- function(x, ...) {
   aes_map <- x
   cat("Normfluodbf Aesthetic mappings:\n")
@@ -160,6 +106,7 @@ print.ggnormfluodbf_aes <- function(x, ...) {
   invisible(aes_map)
 }
 
+# --------------------- Data Summary ---------------------------------
 #' Y Bar Data Summary
 #' @param data data
 #' @param map ggnormfluodbf aesthetic map
@@ -168,9 +115,9 @@ print.ggnormfluodbf_aes <- function(x, ...) {
 #' @export
 #' @examples \dontrun{
 #' weird <- ggplot2::aes(x=smoker,y=sex)
-#' ybarplot_data_summary(data,
-#'                      map = ggnormfluodbf_aes(x=!!rlang::sym(rlang::as_name(weird$x)),
-#'                                              y=!!rlang::sym(rlang::as_name(weird$y))))}
+#' ybarplot_data_summary(data, map = ggnormfluodbf_aes(x=sym(as_name(weird$x)),
+#' y=sym(as_name(weird$y))))
+#' }
 ybarplot_data_summary <- function(data, map, v_adj){
 
   x <- rlang::as_name(map$x)
@@ -190,6 +137,17 @@ ybarplot_data_summary <- function(data, map, v_adj){
   data
 }
 
+#' X Bar Data Summary
+#' @param data data
+#' @param map ggnormfluodbf aesthetic map
+#' @param h_adj horizontal adjustment
+#' @return data summary
+#' @export
+#' @examples \dontrun{
+#' weird <- aes(x=smoker,y=sex)
+#' xbarplot_data_summary(data,map = ggnormfluodbf_aes(x=sym(as_name(weird$x)),
+#' y=sym(as_name(weird$y))))
+#' }
 xbarplot_data_summary <- function(data, map, h_adj) {
 
   x <- rlang::as_name(map$x)
@@ -207,4 +165,3 @@ xbarplot_data_summary <- function(data, map, h_adj) {
     dplyr::mutate(!!rlang::sym(x) := forcats::fct_rev(factor(!!rlang::sym(x))))
   data
 }
-

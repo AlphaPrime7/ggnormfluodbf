@@ -4,14 +4,18 @@
 \alias{read_functions_dictionary}
 \title{Read a function from the functions dictionary}
 \usage{
-read_functions_dictionary(key)
+read_functions_dictionary(key, file)
 }
 \arguments{
 \item{key}{key}
+
+\item{file}{file with dictionary}
 }
 \description{
 Read a function from the functions dictionary
 }
 \examples{
-\dontrun{read_functions_dictionary(test_package)}
+\dontrun{
+read_functions_dictionary(test_package)
+}
 }

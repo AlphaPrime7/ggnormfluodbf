@@ -3,20 +3,37 @@
 \name{barplots}
 \alias{barplots}
 \alias{ggnormfluodbf_vbar}
-\alias{ggnormfluodbf_vbar_alt}
 \alias{ggnormfluodbf_hbar}
 \title{Bar plots generic}
 \usage{
-ggnormfluodbf_vbar(data, mapping, size, v_adj = 0.5, fill_colors = NULL, ...)
+ggnormfluodbf_vbar(
+  data,
+  mapping,
+  stat = c("prop", "prop_alt", "count"),
+  size = NULL,
+  v_adj = 0.5,
+  fill_colors = NULL,
+  bar_args = NULL,
+  count_bar_args = NULL,
+  ...
+)
 
-ggnormfluodbf_vbar_alt(data, x, y, size, fill_colors = NULL, ...)
-
-ggnormfluodbf_hbar(data, mapping, size, h_adj = 0.5, fill_colors = NULL, ...)
+ggnormfluodbf_hbar(
+  data,
+  mapping,
+  stat = NULL,
+  size,
+  h_adj = 0.5,
+  fill_colors = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{data}
 
 \item{mapping}{aesthetic vector}
+
+\item{stat}{stat (prop or count)}
 
 \item{size}{text size}
 
@@ -24,17 +41,15 @@ ggnormfluodbf_hbar(data, mapping, size, h_adj = 0.5, fill_colors = NULL, ...)
 
 \item{fill_colors}{fill colors}
 
+\item{bar_args}{bar arguments}
+
+\item{count_bar_args}{count bar arguments}
+
 \item{...}{dots}
-
-\item{x}{x}
-
-\item{y}{y}
 
 \item{h_adj}{horizontal adjustment}
 }
 \value{
-ggplot object
-
 ggplot object
 
 ggplot object
@@ -47,8 +62,12 @@ Bar plots generic
 \examples{
 \dontrun{
 ggnormfluodbf_vbar(tips, mapping = aes(x = smoker, y = sex), size = 8, fill_colors = c('red','blue'))
+ggnormfluodbf_vbar(tips, mapping = aes(x = smoker, y = sex), size = 8, stat = 'prop', fill_colors = c('red','blue'))
+ggnormfluodbf_vbar(tips, mapping = aes(x = smoker, y = sex), size = 8, stat = 'count', fill_colors = c('red','blue'))
+ggnormfluodbf_vbar(tips, mapping = aes(x = smoker, y = sex), size = 8, stat = 'prop_alt', fill_colors = c('red','blue'))
 ggnormfluodbf_hbar(tips, mapping = aes(x = sex, y = smoker), size = 8, fill_colors = c('maroon','gray'))
 ggnormfluodbf_hbar(df1, mapping = aes(x = sex, y = smoker), size = 8, fill_colors = c('maroon','blue','green'))
 ggnormfluodbf_hbar(df2, mapping = aes(x = sex, y = smoker), size = 5, fill_colors = c('red','blue','maroon','green'),h_adj = 0.4))
-ggnormfluodbf_hbar(df2, mapping = aes(x = smoker, y = sex), size = 5, fill_colors = c('red','blue','maroon','green'),h_adj = 0.4)}
+ggnormfluodbf_hbar(df2, mapping = aes(x = smoker, y = sex), size = 5, fill_colors = c('red','blue','maroon','green'),h_adj = 0.4)
+}
 }

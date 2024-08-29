@@ -1,8 +1,0 @@
-test_package:
-function (package = "./", ...) 
-{
-    devtools::document(package)
-    devtools::test(package, ...)
-}
-tp()
-

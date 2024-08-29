@@ -34,5 +34,6 @@ Single Well Scatter Plot
 }
 \examples{
 \dontrun{
-ggnormfluodbf_scatter(dat_1,mapping = aes(x=Cycle_Number, y=A1), colour = 'green')}
+ggnormfluodbf_scatter(dat_1,mapping = aes(x=Cycle_Number, y=A1), colour = 'green')
+}
 }

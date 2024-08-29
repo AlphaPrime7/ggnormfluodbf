@@ -13,5 +13,7 @@ print_if_interactive(p)
 Interactive Print
 }
 \examples{
-\dontrun{print_if_interactive(p)}
+\dontrun{
+print_if_interactive(p)
+}
 }
