@@ -1,11 +1,13 @@
 #' Ggnormfluodbf Box Plot
+#' @importFrom stats median
 #' @param data data
 #' @param mapping mapping
 #' @param alpha alpha
-#' @param include_mean mean boolean
 #' @param dodge_pos dodge_pos
 #' @param vadj vertical adjustment
 #' @param hadj horizontal adjustment
+#' @param include_mean mean boolean
+#' @param include_labels labels boolean
 #' @return ggplot object
 #' @export
 #' @examples
@@ -13,15 +15,17 @@
 #' ggnormfluodbf_box(tips,ggplot2::aes(x = smoker, y = tip, fill = sex))
 #' ggnormfluodbf_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2)
 #' ggnormfluodbf_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7)
+#' ggnormfluodbf_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7, include_labels = F)
+#' ggnormfluodbf_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7, include_labels = F, include_mean = F)
 #' }
-ggnormfluodbf_box <- function(data,
+ggnormfluodbf_grouped_box <- function(data,
                               mapping,
                               alpha = 0.5,
-                              include_mean = TRUE,
-                              include_labels = TRUE,
                               dodge_pos = 0.75,
                               vadj = -0.5,
-                              hadj = 0.5){
+                              hadj = 0.5,
+                              include_mean = TRUE,
+                              include_labels = TRUE){
   mapping$x <- mapping$x
   mapping$y <- mapping$y
   mapping$fill <- mapping$fill

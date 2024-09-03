@@ -23,5 +23,6 @@ Imports:
     plotly,
     rlang (>= 1.1.3),
     scales
+    stats
 URL: https://github.com/AlphaPrime7/ggnormfluodbf, https://alphaprime7.github.io/ggnormfluodbf/
 BugReports: https://github.com/AlphaPrime7/ggnormfluodbf/issues
