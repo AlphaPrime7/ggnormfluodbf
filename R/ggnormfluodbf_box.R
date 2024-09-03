@@ -12,11 +12,12 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' ggnormfluodbf_box(tips,ggplot2::aes(x = smoker, y = tip, fill = sex))
-#' ggnormfluodbf_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2)
-#' ggnormfluodbf_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7)
-#' ggnormfluodbf_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7, include_labels = F)
-#' ggnormfluodbf_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7, include_labels = F, include_mean = F)
+#' ggnormfluodbf_grouped_box(tips,ggplot2::aes(x = smoker, y = tip, fill = sex))
+#' ggnormfluodbf_grouped_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2)
+#' ggnormfluodbf_grouped_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2)
+#' ggnormfluodbf_grouped_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7)
+#' ggnormfluodbf_grouped_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7, include_labels = F)
+#' ggnormfluodbf_grouped_box(tips,ggplot2::aes(x=smoker, y = tip, fill = sex), alpha = 2, vadj = -5, hadj = 0.7, include_labels = F, include_mean = F)
 #' }
 ggnormfluodbf_grouped_box <- function(data,
                               mapping,
