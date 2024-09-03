@@ -6,6 +6,9 @@
 #' @param dodge_pos dodge_pos
 #' @param vadj vertical adjustment
 #' @param hadj horizontal adjustment
+#' @param mean_point_size size
+#' @param mean_point_shape shape
+#' @param mean_point_color color
 #' @param include_mean mean boolean
 #' @param include_labels labels boolean
 #' @param label_text_size label size
@@ -33,6 +36,9 @@ ggnormfluodbf_box <- function(data,
                               dodge_pos = 0.75,
                               vadj = 0.1,
                               hadj = 0,
+                              mean_point_size = 6,
+                              mean_point_shape = 20,
+                              mean_point_color = "red",
                               include_mean = TRUE,
                               include_labels = TRUE,
                               label_text_size = 4.5,
@@ -50,13 +56,13 @@ ggnormfluodbf_box <- function(data,
   if (is.null(include_mean) || include_mean){
     p <- ggplot2::ggplot(data, mapping) +
       ggplot2::geom_boxplot(alpha = alpha) +
-      ggplot2::stat_summary(fun=mean,
+      ggplot2::stat_summary(fun = mean,
                             mapping = ggplot2::aes(color=mapping$fill),
-                            geom="point",
+                            geom = "point",
                             position = ggplot2::position_dodge2(width = dodge_pos, preserve = "single"),
-                            shape=20,
-                            size=3,
-                            color="red"
+                            shape = mean_point_shape,
+                            size = mean_point_size,
+                            color = mean_point_color
       )
   } else {
     p <- ggplot2::ggplot(data, mapping) +

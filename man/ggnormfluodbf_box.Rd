@@ -11,6 +11,9 @@ ggnormfluodbf_box(
   dodge_pos = 0.75,
   vadj = 0.1,
   hadj = 0,
+  mean_point_size = 6,
+  mean_point_shape = 20,
+  mean_point_color = "red",
   include_mean = TRUE,
   include_labels = TRUE,
   label_text_size = 4.5,
@@ -35,6 +38,12 @@ ggnormfluodbf_box(
 \item{vadj}{vertical adjustment}
 
 \item{hadj}{horizontal adjustment}
+
+\item{mean_point_size}{size}
+
+\item{mean_point_shape}{shape}
+
+\item{mean_point_color}{color}
 
 \item{include_mean}{mean boolean}
 
