@@ -56,7 +56,7 @@ ggnormfluodbf_box <- function(data,
                             position = ggplot2::position_dodge2(width = dodge_pos, preserve = "single"),
                             shape=20,
                             size=3,
-                            color="blue"
+                            color="red"
       )
   } else {
     p <- ggplot2::ggplot(data, mapping) +
