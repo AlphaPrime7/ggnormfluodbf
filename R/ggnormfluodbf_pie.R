@@ -1,6 +1,11 @@
 #' Ggnormfluodbf Pie Charts
 #' @param data data
 #' @param mapping mapping
+#' @param mapping mapping
+#' @param label label
+#' @param fill_colors fill_colors
+#' @param fill_brewer_palette fill_brewer_palette
+#' @param ... dots
 #' @return ggplot object
 #' @export
 #' @examples
@@ -14,7 +19,8 @@ ggnormfluodbf_pie <- function(data,
                               mapping,
                               label = TRUE,
                               fill_colors = NULL,
-                              fill_brewer_palette = NULL){
+                              fill_brewer_palette = NULL,
+                              ...){
 
   x <- rlang::as_name(mapping$x)
 
@@ -22,7 +28,7 @@ ggnormfluodbf_pie <- function(data,
     dplyr::group_by(!!rlang::sym(x)) %>%
     dplyr::summarise(count = dplyr::n(), .groups = 'drop') %>%
     dplyr::mutate(
-      prop = round( ((count / sum(count)) * 100), 2)
+      prop = round(((count / sum(count)) * 100), 2)
     )
 
   mapping$y <- ""

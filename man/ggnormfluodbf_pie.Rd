@@ -4,12 +4,27 @@
 \alias{ggnormfluodbf_pie}
 \title{Ggnormfluodbf Pie Charts}
 \usage{
-ggnormfluodbf_pie(data, mapping)
+ggnormfluodbf_pie(
+  data,
+  mapping,
+  label = TRUE,
+  fill_colors = NULL,
+  fill_brewer_palette = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{data}
 
 \item{mapping}{mapping}
+
+\item{label}{label}
+
+\item{fill_colors}{fill_colors}
+
+\item{fill_brewer_palette}{fill_brewer_palette}
+
+\item{...}{dots}
 }
 \value{
 ggplot object
@@ -21,5 +36,7 @@ Ggnormfluodbf Pie Charts
 \dontrun{
 ggnormfluodbf_pie(df1, ggplot2::aes(x=smoker))
 ggnormfluodbf_pie(df1, ggplot2::aes(x=sex))
+ggnormfluodbf_pie(df1, ggplot2::aes(x=sex), fill_colors = c('red','green','blue'))
+ggnormfluodbf_pie(df1, ggplot2::aes(x=sex), fill_brewer_palette = 'Greens')
 }
 }
