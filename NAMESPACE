@@ -2,6 +2,7 @@
 
 export(ggnormfluodbf_aes)
 export(ggnormfluodbf_hbar)
+export(ggnormfluodbf_pie)
 export(ggnormfluodbf_scatter)
 export(ggnormfluodbf_vbar)
 export(print_if_interactive)

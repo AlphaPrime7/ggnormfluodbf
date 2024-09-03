@@ -107,7 +107,7 @@ ggnormfluodbf_vbar <- function(
       ggplot2::scale_y_continuous() +
       ggplot2::geom_text(
         stat = 'count',
-        ggplot2::aes(label = after_stat(count)),
+        ggplot2::aes(label = ggplot2::after_stat(count)),
         position = ggplot2::position_stack(vjust = 0.5, reverse = F),
         ...
       )
