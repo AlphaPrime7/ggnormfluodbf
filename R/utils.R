@@ -165,3 +165,14 @@ xbarplot_data_summary <- function(data, map, h_adj) {
     dplyr::mutate(!!rlang::sym(x) := forcats::fct_rev(factor(!!rlang::sym(x))))
   data
 }
+
+set_invisible_variable <- function(name, value) {
+  parent_env <- parent.frame()
+  
+  makeActiveBinding(name, function() value, parent_env)
+  
+  # Hide the binding
+  bindingIsActive(name, parent_env)
+  environmentIsLocked(parent_env)
+  lockBinding(name, parent_env)
+}
