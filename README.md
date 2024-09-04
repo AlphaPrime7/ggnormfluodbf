@@ -21,6 +21,11 @@ ggnormfluodbf_hbar(Affairs, ggplot2::aes(x=gender,y=children), size = 5)
 
 #vbar
 ggnormfluodbf_vbar(Affairs, ggplot2::aes(x=gender,y=children), size = 5)
+
+#pie
+title <- ""
+ggnormfluodbf::ggnormfluodbf_pie(Affairs,ggplot2::aes(x=gender))
+ggnormfluodbf::ggnormfluodbf_pie(Affairs,ggplot2::aes(x=children))
 ```
 
 ## Suggestions Accepted
