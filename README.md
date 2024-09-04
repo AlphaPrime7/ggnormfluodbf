@@ -12,8 +12,15 @@ library(ggnormfluodbf)
 ``` r
 data(package = .packages(all.available = TRUE))
 data('Affairs', package = 'AER')
+#box
 ggnormfluodbf_box(Affairs, ggplot2::aes(x=children,y=age,fill=gender), include_labels = F)
 ggnormfluodbf_box(Affairs, ggplot2::aes(x=gender,y=rating,fill=children), include_labels = T)
+
+#hbar
+ggnormfluodbf_hbar(Affairs, ggplot2::aes(x=gender,y=children), size = 5)
+
+#vbar
+ggnormfluodbf_vbar(Affairs, ggplot2::aes(x=gender,y=children), size = 5)
 ```
 
 ## Suggestions Accepted
