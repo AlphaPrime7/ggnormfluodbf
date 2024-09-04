@@ -34,7 +34,8 @@ ggnormfluodbf_pie <- function(data,
   mapping$y <- ""
   mapping$x <- mapping$x
   mapping$fill <- mapping$x
-  assign("title", "", envir = parent.frame())
+  set_invisible_variable('title',"")
+  #assign("title", "", envir = parent.frame())
 
   if (is.null(label) || isTRUE(label)){
     p <- ggplot2::ggplot(data, mapping) +
