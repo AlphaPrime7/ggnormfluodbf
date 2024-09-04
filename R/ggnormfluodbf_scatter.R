@@ -1,7 +1,6 @@
 #' Single Well Scatter Plot
 #' @param data data
 #' @param mapping aesthetic mapping container
-#' @param colour colour
 #' @param title title
 #' @param xlab x label
 #' @param ylab y label
