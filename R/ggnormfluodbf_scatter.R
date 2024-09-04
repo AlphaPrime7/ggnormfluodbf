@@ -12,7 +12,6 @@
 #' }
 ggnormfluodbf_scatter <- function(data,
                                   mapping,
-                                  colour=NULL,
                                   title = 'Normfluodbf scatter plot',
                                   xlab = "Cycle Number",
                                   ylab = "Fluorescence"){
@@ -30,10 +29,6 @@ ggnormfluodbf_scatter <- function(data,
   if (is.null(mapping$y)) {
     rlang::warn(message = 'The y variable must be provided',
                 use_cli_format = T)
-  }
-
-  if (!is.null(colour)) {
-    mapping$colour <- colour
   }
 
   p <- ggplot2::ggplot(data,
