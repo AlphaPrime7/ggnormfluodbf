@@ -2,14 +2,14 @@
 
 ## Install Dev Version 
 
-```{r}
+``` r
 devtools::install_github('https://github.com/AlphaPrime7/ggnormfluodbf')
 library(ggnormfluodbf)
 ```
 
 ## Quick Test
 
-```{r}
+``` r
 data(package = .packages(all.available = TRUE))
 data('Affairs', package = 'AER')
 ggnormfluodbf_box(Affairs, ggplot2::aes(x=children,y=age,fill=gender), include_labels = F)
