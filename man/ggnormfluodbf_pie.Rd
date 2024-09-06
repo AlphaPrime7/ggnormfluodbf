@@ -34,6 +34,7 @@ Ggnormfluodbf Pie Charts
 }
 \examples{
 \dontrun{
+
 ggnormfluodbf_pie(df1, ggplot2::aes(x=smoker))
 ggnormfluodbf_pie(df1, ggplot2::aes(x=sex))
 ggnormfluodbf_pie(df1, ggplot2::aes(x=sex), fill_colors = c('red','green','blue'))

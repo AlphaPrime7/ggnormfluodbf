@@ -67,6 +67,17 @@ create_dictionary:
 	}
 	create_functions_dictionary()
 
+calculate_box_stats:
+	calc_stats <- function(x) {
+		q75 <- stats::quantile(x, 0.75)
+    		iqr <- IQR(x)
+    		upper_whisker <- min(max(x), q75 + 1.5 * iqr)
+    		data.frame(
+    			y = upper_whisker + diff(range(x)) * 0.5,
+    			label = sprintf("Median: %.2f\nMean: %.2f", stats::median(x), mean(x)))
+    		}
+    	calc_stats()
+	
 	
 
 	

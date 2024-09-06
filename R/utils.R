@@ -166,11 +166,19 @@ xbarplot_data_summary <- function(data, map, h_adj) {
   data
 }
 
+#' Active Binding in R
+#' @param name name
+#' @param value value
+#' @return NULL
+#' @export
+#' @examples
+#' \dontrun{
+#' set_invisible_variable('title',"")}
 set_invisible_variable <- function(name, value) {
   parent_env <- parent.frame()
-  
+
   makeActiveBinding(name, function() value, parent_env)
-  
+
   # Hide the binding
   bindingIsActive(name, parent_env)
   environmentIsLocked(parent_env)

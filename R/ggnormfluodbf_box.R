@@ -34,9 +34,9 @@ ggnormfluodbf_box <- function(data,
                               mapping,
                               alpha = 1.0,
                               dodge_pos = 0.75,
-                              vadj = 0.1,
+                              vadj = 0,
                               hadj = 0,
-                              mean_point_size = 5,
+                              mean_point_size = 6,
                               mean_point_shape = 18, #10,11,12,15*,16=20,17*,18**,21
                               mean_point_color = "red",
                               include_mean = TRUE,
@@ -71,8 +71,11 @@ ggnormfluodbf_box <- function(data,
 
   if (is.null(include_labels) || include_labels) {
     calc_stats <- function(x) {
+      q75 <- stats::quantile(x, 0.75)
+      iqr <- IQR(x)
+      upper_whisker <- max(max(x), q75 + 1.5 * iqr)
       data.frame(
-        y = max(x) + diff(range(x)) * vadj,
+        y = upper_whisker * 1.01,
         label = sprintf("Median: %.2f\nMean: %.2f", stats::median(x), mean(x))
       )
     }
@@ -273,5 +276,3 @@ ggnormfluodbf_box_labelgeom_deprecated <- function(data,
   }
   p
 }
-
-

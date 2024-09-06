@@ -7,7 +7,6 @@
 ggnormfluodbf_scatter(
   data,
   mapping,
-  colour = NULL,
   title = "Normfluodbf scatter plot",
   xlab = "Cycle Number",
   ylab = "Fluorescence"
@@ -17,8 +16,6 @@ ggnormfluodbf_scatter(
 \item{data}{data}
 
 \item{mapping}{aesthetic mapping container}
-
-\item{colour}{colour}
 
 \item{title}{title}
 
